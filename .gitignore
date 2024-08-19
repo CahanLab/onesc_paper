@@ -1,0 +1,27 @@
+.DS_Store
+
+# do not track all the input and output. Only track scripts 
+parameters_tuning_GA_ensemble/input/*
+parameters_tuning_GA_ensemble/output/*
+
+benchmark_network_inference_ensemble_BEELINE/Beeline_benchmark/* 
+benchmark_network_inference_ensemble_BEELINE/output/* 
+
+benchmark_simulators_parallel_time/BoolODE/* 
+benchmark_simulators_parallel_time/output/* 
+
+benchmark_network_inference_real/Beeline_benchmark/*
+benchmark_network_inference_real/output/*
+
+benchmark_simulators_time/BoolODE/* 
+benchmark_simulators_time/output/* 
+
+in-silico_perturbations/literature_validations/* 
+in-silico_perturbations/output/* 
+
+curate_real_training_data/input/* 
+curate_real_training_data/output/* 
+
+benchmark_simulators_similarity/BEELINE-data/* 
+benchmark_simulators_similarity/BoolODE/* 
+benchmark_simulators_similarity/output/* 
