@@ -5,7 +5,7 @@ import numpy as np
 import os
 import scanpy as sc
 import statsmodels.api as sm
-import OneCC_bool
+import onesc
 
 def cluster_simulation(sim_folder_path): 
     all_files = os.listdir(sim_folder_path)

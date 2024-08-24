@@ -28,8 +28,8 @@ if os.path.exists("../output/screen_generations_finer") == False:
 for temp_max_iter in np.linspace(5, 30, 6):
     for temp_num_gen in np.linspace(10, 100, 10):
         new_folder = 'numgeneration_' + str(int(temp_num_gen)) + "_maxiter_" + str(int(temp_max_iter))
-        if os.path.exists(os.path.join("../output/screen_generations", new_folder)) == False:
-            os.makedirs(os.path.join("../output/screen_generations", new_folder))
+        if os.path.exists(os.path.join("../output/screen_generations_finer", new_folder)) == False:
+            os.makedirs(os.path.join("../output/screen_generations_finer", new_folder))
         for data_type in subfolders: 
             print(data_type)
             [training_dict, initial_clusters] = pickle.load(open('../' + data_type + "/training_package.pickle", "rb"))
