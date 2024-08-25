@@ -87,9 +87,8 @@ cat_ss = plot_df %>%
   group_by(method) %>% 
   summarize(mean_of_ss = mean(abs(steady_states_num))) %>% 
   arrange(mean_of_ss)
-cat_ss = read.csv(file = '../output/Performance_F1/category_ordering.csv', row.names = 1)
 
-plot_df = plot_df[plot_df$method != 'PCOR', ]
+cat_ss = read.csv(file = '../output/Performance_F1/category_ordering.csv', row.names = 1)
 
 plot_df$method = factor(plot_df$method, levels = cat_ss$method)
 

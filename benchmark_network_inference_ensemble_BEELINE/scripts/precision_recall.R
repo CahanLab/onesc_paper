@@ -5,6 +5,7 @@ library(cowplot)
 library(dplyr)
 library(viridis)
 
+##### make the functions for precision and recall #####
 calc_precision <- function(gs_edges, inferred_edges) { 
   num_TP = length(intersect(gs_edges, inferred_edges))
   num_FP = length(setdiff(inferred_edges, gs_edges))
@@ -17,6 +18,7 @@ calc_recall <- function(gs_edges, inferred_edges) {
   return(num_TP / (num_TP + num_FN))
 }
 
+##### analyze the precision and recall #####
 option_list = list()
 option_list[['run_OneSC']] = 'OneSC'
 option_list[['run_iQcell']] = 'iQcell'
@@ -91,7 +93,7 @@ p <- ggplot(big_df_F1, aes(x=reorder(methods,-precision, mean), y=precision)) +
 ggsave(filename = '../output/Performance_F1/F1_precision_comparison.png', plot = p, width = 10, height = 4)
 
 p <- ggplot(big_df_F1, aes(x=reorder(methods,-recall), y=recall)) + 
-  geom_boxplot()+
+  geom_boxplot()+ 
   theme_half_open() + 
   ylab("recall") + 
   xlab("Methods") +
@@ -100,8 +102,32 @@ p <- ggplot(big_df_F1, aes(x=reorder(methods,-recall), y=recall)) +
 
 ggsave(filename = '../output/Performance_F1/F1_recall_comparison.png', plot = p, width = 10, height = 4)
 
-big_df_F1 = big_df_F1[big_df_F1$methods != 'PCOR', ]
+# plot precision and recall in one single plot 
+new_precision_df = data.frame(methods = big_df_F1$methods, 
+                              datatypes = big_df_F1$datatypes, 
+                              metric = big_df_F1$precision, 
+                              metric_type = 'precision')
 
+new_recall_df = data.frame(methods = big_df_F1$methods, 
+                              datatypes = big_df_F1$datatypes, 
+                              metric = big_df_F1$recall, 
+                              metric_type = 'recall')
+
+new_df = rbind(new_precision_df, new_recall_df)
+
+p <- ggplot(new_df, aes(x=reorder(methods,-metric), y=metric, fill = metric_type)) + 
+  geom_boxplot()+ 
+  theme_half_open() + 
+  scale_fill_brewer(palette = "Accent") +
+  ylab("") + 
+  xlab("Methods") +
+  ggtitle('GRNs selected using optimal F1') + 
+  guides(fill=guide_legend(title="Metrics")) +
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.9, hjust=1))
+
+ggsave(filename = '../output/Performance_F1/combined_precision_recall.png', plot = p, width = 10, height = 4)
+
+##### make the heatmap for F1 scores #####
 big_df_F1 = big_df_F1
 cat_ss = big_df_F1 %>% 
   group_by(methods) %>%
@@ -111,7 +137,23 @@ cat_ss = big_df_F1 %>%
 big_df_F1$methods = factor(big_df_F1$methods, levels = cat_ss$methods)
 write.csv(cat_ss, file = '../output/Performance_F1/category_ordering.csv')
 
+
+# get the mean 
+mean_df = big_df_F1 %>% 
+  group_by(methods) %>%
+  summarise(F1 = mean(F1, na.rm = TRUE))
+
+avg_df_F1 = data.frame(methods = mean_df$methods, 
+                       datatypes = 'Mean', 
+                       precision = NA, 
+                       recall = NA, 
+                       F1 = mean_df$F1, 
+                       thres_style = 'max F1')
+
+#big_df_F1 = rbind(big_df_F1, avg_df_F1)
 big_df_F1$F1 = round(big_df_F1$F1, digits = 2)
+big_df_F1$datatypes = factor(big_df_F1$datatypes, levels = c(unique(big_df_F1$datatypes)[unique(big_df_F1$datatypes) != 'Mean'], 'Mean'))
+
 p = ggplot(big_df_F1, aes(datatypes, methods, fill= F1)) + 
   geom_tile() +
   geom_text(aes(label = F1)) + 
