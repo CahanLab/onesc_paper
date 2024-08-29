@@ -26,5 +26,5 @@ benchmark_simulators_similarity/BEELINE-data/*
 benchmark_simulators_similarity/BoolODE/* 
 benchmark_simulators_similarity/output/* 
 
-benchmark_training_time_machine/input/* 
+benchmark_training_time_machine/inputs/* 
 benchmark_training_time_machine/output/* 
