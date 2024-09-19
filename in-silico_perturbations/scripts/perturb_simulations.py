@@ -45,7 +45,7 @@ for data_type in data_types:
         print(temp_TF)
         if os.path.isdir(save_folder_path + "/" + temp_TF) == False:
             os.makedirs(save_folder_path + "/" + temp_TF) 
-        num_samples = 100 # TODO make sure you change this to 50
+        num_samples = 200 
         num_runs = list(range(0, num_samples))     
         def run_parallel(i):
             np.random.seed(i)
@@ -65,7 +65,7 @@ for data_type in data_types:
         print(temp_TF)
         if os.path.isdir(save_folder_path + "/" + temp_TF) == False:
             os.makedirs(save_folder_path + "/" + temp_TF) 
-        num_samples = 100 
+        num_samples = 200 
         num_runs = list(range(0, num_samples))     
         def run_parallel(i):
             np.random.seed(i)

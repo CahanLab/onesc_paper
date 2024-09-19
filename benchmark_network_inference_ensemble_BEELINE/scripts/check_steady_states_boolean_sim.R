@@ -96,6 +96,29 @@ plot_df$method = factor(plot_df$method, levels = cat_ss$method)
 t.test(plot_df[plot_df$method == 'ONESC', 'average_steady_states_agreement'], plot_df[plot_df$method == 'GENIE3', 'average_steady_states_agreement'])
 t.test(plot_df[plot_df$method == 'ONESC', 'average_steady_states_agreement'], plot_df[plot_df$method == 'SCODE', 'average_steady_states_agreement'])
 
+# steady state num 
+mean_ss_num_df = plot_df %>% 
+  group_by(method) %>%
+  summarise(steady_states_num = mean(abs(steady_states_num), na.rm = TRUE))
+
+new_plot_df = plot_df
+new_plot_df[new_plot_df$data_type == 'dyn-CY' & is.na(new_plot_df$average_steady_states_agreement) == TRUE, 'average_steady_states_agreement'] = 1
+new_plot_df[is.na(new_plot_df$average_steady_states_agreement) == TRUE, 'average_steady_states_agreement'] = 0
+mean_sim_df = new_plot_df %>% 
+  group_by(method) %>%
+  summarise(average_steady_states_agreement = mean(average_steady_states_agreement))
+
+avg_df_sim = data.frame(data_type = rep('Mean', nrow(mean_sim_df)), 
+                       method = mean_sim_df$method, 
+                       steady_states_num = mean_ss_num_df$steady_states_num, 
+                       average_steady_states_agreement = mean_sim_df$average_steady_states_agreement)
+
+plot_df = rbind(plot_df, avg_df_sim)
+plot_df$steady_states_num = round(plot_df$steady_states_num, digits = 2)
+plot_df$average_steady_states_agreement = round(plot_df$average_steady_states_agreement, digits = 2)
+plot_df$data_type = factor(plot_df$data_type , levels = c(unique(plot_df$data_type )[unique(plot_df$data_type ) != 'Mean'], 'Mean'))
+plot_df[plot_df$data_type == 'dyn-CY' & is.na(plot_df$average_steady_states_agreement) == TRUE, 'average_steady_states_agreement'] = 1
+
 p = ggplot(plot_df, aes(data_type, method, fill= average_steady_states_agreement)) + 
   geom_tile() +
   geom_text(aes(label = average_steady_states_agreement)) + 
@@ -106,9 +129,27 @@ p = ggplot(plot_df, aes(data_type, method, fill= average_steady_states_agreement
   theme_half_open() + 
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1), legend.position = "None")
         
-ggsave(filename = file.path("../output/Boolean_sim/agreement.png"), plot = p, height = 6, width = 5)
+ggsave(filename = file.path("../output/Boolean_sim/agreement.png"), plot = p, height = 7, width = 6)
 
-p = ggplot(plot_df, aes(data_type, method, fill= steady_states_num)) + 
+
+# make the plots with annotations 
+p = ggplot(plot_df, aes(data_type, method, fill= average_steady_states_agreement)) + 
+  geom_tile() +
+  geom_text(aes(label = average_steady_states_agreement)) + 
+  ylab("Methods") +
+  xlab("Data Types") +
+  scale_fill_viridis(discrete=FALSE, alpha = 0.8) + 
+  guides(fill=guide_legend(title="")) +
+  theme_half_open() + 
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1), legend.position = "left")
+
+ggsave(filename = file.path("../output/Boolean_sim/agreement_annotate.png"), plot = p, height = 7, width = 6)
+
+plot_df$new_dt = plot_df$data_type
+plot_df$new_dt = factor(plot_df$new_dt , levels = c(unique(as.character(plot_df$new_dt)), 'Abs. \nMean'))
+plot_df[plot_df$data_type == 'Mean', 'new_dt'] = 'Abs. \nMean'
+
+p = ggplot(plot_df, aes(new_dt, method, fill= steady_states_num)) + 
   geom_tile() +
   geom_text(aes(label = steady_states_num)) + 
   ylab("Methods") +
@@ -122,20 +163,7 @@ p = ggplot(plot_df, aes(data_type, method, fill= steady_states_num)) +
   theme_half_open() + 
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1), legend.position = "None")
 
-ggsave(filename = file.path("../output/Boolean_sim/num_ss.png"), plot = p, height = 6, width = 5)
-
-# make the plots with annotations 
-p = ggplot(plot_df, aes(data_type, method, fill= average_steady_states_agreement)) + 
-  geom_tile() +
-  geom_text(aes(label = average_steady_states_agreement)) + 
-  ylab("Methods") +
-  xlab("Data Types") +
-  scale_fill_viridis(discrete=FALSE, alpha = 0.8) + 
-  guides(fill=guide_legend(title="")) +
-  theme_half_open() + 
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1), legend.position = "left")
-
-ggsave(filename = file.path("../output/Boolean_sim/agreement_annotate.png"), plot = p, height = 6, width = 4)
+ggsave(filename = file.path("../output/Boolean_sim/num_ss.png"), plot = p, height = 7, width = 6)
 
 p = ggplot(plot_df, aes(data_type, method, fill= steady_states_num)) + 
   geom_tile() +
@@ -151,4 +179,4 @@ p = ggplot(plot_df, aes(data_type, method, fill= steady_states_num)) +
   theme_half_open() + 
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1), legend.position = "left")
 
-ggsave(filename = file.path("../output/Boolean_sim/num_ss_annotate.png"), plot = p, height = 6, width = 4)
+ggsave(filename = file.path("../output/Boolean_sim/num_ss_annotate.png"), plot = p, height = 7, width = 6)

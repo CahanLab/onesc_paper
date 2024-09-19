@@ -82,14 +82,28 @@ cat_ss = plot_df %>%
   summarise_at(vars(percent_agreement), mean) %>% 
   arrange(percent_agreement)
 plot_df$methods = factor(plot_df$methods, levels = cat_ss$methods)
+write.csv(plot_df, file.path(output_path, 'plot_df.csv'))
+
 p = ggplot(plot_df, aes(x = methods, y = states, fill= percent_agreement)) + 
   geom_tile() +
   geom_text(aes(label = percent_agreement)) + 
-  ylab("Steady States") +
+  ylab("Terminal States") +
   xlab("Methods") +
   scale_fill_viridis(discrete=FALSE) + 
-  guides(fill=guide_legend(title="Top \nSteady States \nSimilarity")) +
+  guides(fill=guide_legend(title="Top \nTerminal States \nSimilarity")) +
   theme_half_open() + 
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) + 
   coord_flip()
 ggsave(filename = file.path(output_path, paste0(datatype, ".png")), plot = p, width = 5, height = 8)
+
+p = ggplot(plot_df, aes(x = methods, y = states, fill= percent_agreement)) + 
+  geom_tile() +
+  geom_text(aes(label = percent_agreement)) + 
+  ylab("Terminal States") +
+  xlab("Methods") +
+  scale_fill_viridis(discrete=FALSE) + 
+  guides(fill=guide_legend(title="Top \nTerminal \nStates \nSimilarity")) +
+  theme_half_open() + 
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) + 
+  coord_flip()
+ggsave(filename = file.path(output_path, paste0(datatype, "_copy.png")), plot = p, width = 5, height = 8)

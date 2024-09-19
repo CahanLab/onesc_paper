@@ -51,9 +51,9 @@ p <- ggplot(big_df, aes(x=parameter, y=F1)) +
   geom_boxplot()+
   theme_half_open() + 
   ylab("F1 Score") + 
-  xlab("Ideal Network Density Parameter") +
+  xlab("Ideal subnetwork density") +
   ylim(c(0, 1)) + 
-  ggtitle('OneSC GRNs from multiple ideal network density') + 
+  ggtitle('OneSC GRNs from multiple ideal subnetwork density') + 
   theme(axis.text.x = element_text(angle = 45, vjust = 0.9, hjust=1))
 
 ggsave(filename = '../output/screen_density/F1_comparison.png', plot = p, width = 10, height = 4)

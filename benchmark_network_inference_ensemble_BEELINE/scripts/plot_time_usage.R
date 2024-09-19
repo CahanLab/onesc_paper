@@ -3,6 +3,7 @@ library(ggplot2)
 library(cowplot)
 library(ggbreak)
 library(dplyr)
+library(cowplot)
 
 data_types = list.dirs("../Beeline_benchmark/outputs/example/", full.names = FALSE, recursive = FALSE)
 
@@ -129,3 +130,33 @@ p <- ggplot(big_time_df, aes(x=data_type, y=user_time, fill = methods)) +
 
 dir.create("../output/time_comparison")
 ggsave("../output/time_comparison/run_time_comparison.png", plot = p, width = 10, height = 5)
+
+##### plot out number of nodes vs runtime ######
+OneSC_df = big_time_df[big_time_df$methods == 'ONESC', ]
+num_nodes = c()
+for(tmp_datatype in OneSC_df$data_type) {
+  network = read.csv(paste0("../Beeline_benchmark/inputs/example/", tmp_datatype, '/refNetwork.csv'))
+  all_genes = unique(c(network$Gene1, network$Gene2))
+  num_nodes = c(num_nodes, length(all_genes))
+}
+OneSC_df$num_nodes = num_nodes
+
+p = ggplot(data = OneSC_df, aes(x = num_nodes, y = user_time)) +
+  geom_point() + 
+  geom_smooth(method = "lm", se = FALSE, color = 'black') + 
+  theme_cowplot() + 
+  ylab("Runtime (seconds)") + 
+  xlab("Number of network genes") + 
+  annotate(
+    "text",
+    x = 12,  # X position of the text
+    y = 1000,  # Y position of the text
+    label = paste("Pearson r =", round(cor(OneSC_df$num_nodes, OneSC_df$user_time), 2)),  # Text label with correlation
+    size = 5,  # Font size
+    color = "blue"  # Text color
+  )+
+  ggtitle("OneSC runtime of BEELINE data on 16 cores machine")
+
+ggsave("../output/time_comparison/run_time_machine.png", plot = p, width = 10, height = 5)
+
+  

@@ -28,3 +28,6 @@ benchmark_simulators_similarity/output/*
 
 benchmark_training_time_machine/inputs/* 
 benchmark_training_time_machine/output/* 
+
+reviewer_comments_OneSC/input/*
+reviewer_comments_OneSC/output/*

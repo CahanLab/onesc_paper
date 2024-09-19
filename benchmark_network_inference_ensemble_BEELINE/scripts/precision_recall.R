@@ -150,7 +150,7 @@ avg_df_F1 = data.frame(methods = mean_df$methods,
                        F1 = mean_df$F1, 
                        thres_style = 'max F1')
 
-#big_df_F1 = rbind(big_df_F1, avg_df_F1)
+big_df_F1 = rbind(big_df_F1, avg_df_F1)
 big_df_F1$F1 = round(big_df_F1$F1, digits = 2)
 big_df_F1$datatypes = factor(big_df_F1$datatypes, levels = c(unique(big_df_F1$datatypes)[unique(big_df_F1$datatypes) != 'Mean'], 'Mean'))
 
@@ -163,7 +163,7 @@ p = ggplot(big_df_F1, aes(datatypes, methods, fill= F1)) +
   guides(fill=guide_legend(title="F1 Scores")) +
   theme_half_open() +
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1), legend.position = "None")
-ggsave(filename = '../output/Performance_F1/F1_heatmaps.png', plot = p, width = 5, height = 6)
+ggsave(filename = '../output/Performance_F1/F1_heatmaps.png', plot = p, width = 6, height = 7)
 
 p = ggplot(big_df_F1, aes(datatypes, methods, fill= F1)) + 
   geom_tile() +
@@ -174,4 +174,4 @@ p = ggplot(big_df_F1, aes(datatypes, methods, fill= F1)) +
   guides(fill=guide_legend(title="F1 Scores")) +
   theme_half_open() +
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1), legend.position = "left")
-ggsave(filename = '../output/Performance_F1/F1_heatmaps_annotate.png', plot = p, width = 5, height = 6)
+ggsave(filename = '../output/Performance_F1/F1_heatmaps_annotate.png', plot = p, width = 6, height = 7)
