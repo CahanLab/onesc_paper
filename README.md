@@ -7,7 +7,7 @@ The analysis is seperated into folders corresponding the type of analysis.
 
 |Folder | Analysis Decription| Figures|
 | --------- | --------------- | --------------- |
-|benchmark_network_inference_BEELINE| benchmarking GRN inference against other GRN methods | Figure 2, S1-4|
+|[benchmark_network_inference_BEELINE](benchmark_network_inference_ensemble_BEELINE/README.md)| benchmarking GRN inference against other GRN methods | Figure 2, S1-4|
 |parameters_tuning_GA| testing various parameters of GA to see how it affects GRN inference performance| Figure S5-6|
 |benchmark_simulators_time| benchmarking simulator in terms of runtime (single core)| Figure 3A|
 |benchmark_simulators_parallel_time| benchmarking simulator in terms of runtime (5 cores) | Figure 3B|
