@@ -1,0 +1,3 @@
+# GRN inference methods benchmarking using BEELINE 
+
+This folder contains code and data required to generate Figure 2, S1-4. To run this, please first download and extract [Beeline_benchmark](https://cnobjects.s3.amazonaws.com/OneSC/manuscript_github_data/benchmark_network_inference_ensemble_BEELINE/Beeline_benchmark.tar.gz) and [output](https://cnobjects.s3.amazonaws.com/OneSC/manuscript_github_data/benchmark_network_inference_ensemble_BEELINE/output.tar.gz) folders into this directory. Then run *scripts/run_main.sh*. 
