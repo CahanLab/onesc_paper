@@ -14,7 +14,7 @@ The analysis is seperated into folders corresponding the type of analysis.
 |[benchmark_simulators_similarity](benchmark_simulators_similarity)| comparing simulator with BoolODE in terms of synthetic cell similarity| Figure 3C, S7-8| 
 |[curate_real_training_data](curate_real_training_data)| identifying the dynamically expressed TFs. Process the raw scRNA-seq data|Figure S9, S11|
 |[benchmark_network_inference_real](benchmark_network_inference_real)| applying OneSC to real mouse myeloid single-cell dataset| Figure 4B-E, S10, S12-13|
-|in-silico_perturbations| applying OneSC to predict in-silico perturbations| Figure 5, S14|
+|[in-silico_perturbations](in-silico_perturbations)| applying OneSC to predict in-silico perturbations| Figure 5, S14|
 
 
 
