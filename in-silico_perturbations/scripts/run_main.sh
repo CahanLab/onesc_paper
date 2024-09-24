@@ -18,6 +18,3 @@ python compute_correlation_similarity.py
 
 # plot out the UMAP simulations 
 Rscript plot_UMAP_simulation.R
-
-# plot out the heatmap simulations 
-# Rscript plot_heatmap_simulation.R
