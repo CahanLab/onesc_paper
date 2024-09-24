@@ -12,7 +12,6 @@ python screen_generation_time_finer.py
 
 python extract_generation_time_runtime_finer.py 
 
-
 # start investigating the effect of network density paramter on the performance 
 python screen_network_density.py 
 
