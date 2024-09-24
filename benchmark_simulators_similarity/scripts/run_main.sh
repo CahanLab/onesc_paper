@@ -33,16 +33,3 @@ Rscript plot_average_correlation.R
 # plot out the original UMAP + cluster id 
 # plot out the query UMAP + cluster id 
 Rscript plot_correlation.R
-
-##### these scripts are not used ######
-
-# check UMAP structure using query 
-python check_UMAP_overlap_query_UMAP.py
-
-# TODO turns out that pySCN is pretty useless in this 
-# perform pySCN to assess the similarities 
-python run_pySCN.py
-
-# plot out original UMAP + cluster id SCN classification 
-# plot out query UMAP + cluster id
-Rscript plot_classification.R
