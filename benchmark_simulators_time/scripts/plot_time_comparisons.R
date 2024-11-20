@@ -164,7 +164,7 @@ p<-ggplot(total_plot_df, aes(x=num_edges, y=med_time, group=style)) +
   scale_color_brewer(palette="Dark2") +
   scale_fill_brewer(palette="Dark2") +
   guides(color=guide_legend(title="Methods"), fill='none') +
-  ggtitle('Runtime Comparisons - Single Core') +
+  ggtitle('Runtime Comparisons - Single-core') +
   theme_half_open() + 
   facet_wrap(~ network_size, ncol=2, scale = 'free_x') +
   theme(text = element_text(size=30), strip.background = element_blank()) 

@@ -90,7 +90,7 @@ p = ggplot(plot_df, aes(x = methods, y = states, fill= percent_agreement)) +
   ylab("Terminal States") +
   xlab("Methods") +
   scale_fill_viridis(discrete=FALSE) + 
-  guides(fill=guide_legend(title="Top \nTerminal States \nSimilarity")) +
+  guides(fill=guide_legend(title="Top \nTerminal State \nSimilarity")) +
   theme_half_open() + 
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) + 
   coord_flip()
@@ -102,7 +102,7 @@ p = ggplot(plot_df, aes(x = methods, y = states, fill= percent_agreement)) +
   ylab("Terminal States") +
   xlab("Methods") +
   scale_fill_viridis(discrete=FALSE) + 
-  guides(fill=guide_legend(title="Top \nTerminal \nStates \nSimilarity")) +
+  guides(fill=guide_legend(title="Top \nTerminal \nState \nSimilarity")) +
   theme_half_open() + 
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) + 
   coord_flip()
